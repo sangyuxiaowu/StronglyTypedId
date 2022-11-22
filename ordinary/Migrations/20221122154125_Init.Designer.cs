@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StronglyTypedId;
+using ordinary;
 
 #nullable disable
 
-namespace StronglyTypedId.Migrations
+namespace ordinary.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20221122064336_Init")]
+    [Migration("20221122154125_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -22,9 +22,10 @@ namespace StronglyTypedId.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("StronglyTypedId.Author", b =>
+            modelBuilder.Entity("ordinary.Author", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
@@ -40,15 +41,13 @@ namespace StronglyTypedId.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("StronglyTypedId.Book", b =>
+            modelBuilder.Entity("ordinary.Book", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<long>("Author")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("AuthorId")
+                    b.Property<long>("AuthorId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("BookName")
@@ -62,16 +61,15 @@ namespace StronglyTypedId.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("StronglyTypedId.Book", b =>
+            modelBuilder.Entity("ordinary.Book", b =>
                 {
-                    b.HasOne("StronglyTypedId.Author", null)
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId");
-                });
+                    b.HasOne("ordinary.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("StronglyTypedId.Author", b =>
-                {
-                    b.Navigation("Books");
+                    b.Navigation("Author");
                 });
 #pragma warning restore 612, 618
         }

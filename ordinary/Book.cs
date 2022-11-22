@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ordinary
+﻿namespace ordinary
 {
     internal class Book
     {
@@ -13,7 +6,8 @@ namespace ordinary
 
         public string BookName { get; set; }
 
-        public long Author { get; set; }
+        public Author? Author { get; set; }
+        public long AuthorId { get; set; }
     }
 
 }

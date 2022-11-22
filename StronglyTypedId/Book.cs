@@ -9,11 +9,11 @@ namespace StronglyTypedId
 {
     internal class Book
     {
-        public BookId Id { get; set; } = new BookId(Guid.NewGuid());
+        public BookId Id { get; set; }
 
         public string BookName { get; set; }
-
-        public AuthorId Author { get; set; }
+        public Author? Author { get; set; }
+        public AuthorId AuthorId { get; set; }
     }
 
     public readonly struct BookId

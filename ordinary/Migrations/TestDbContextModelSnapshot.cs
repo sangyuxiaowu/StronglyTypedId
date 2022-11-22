@@ -44,10 +44,7 @@ namespace ordinary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<long>("Author")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("AuthorId")
+                    b.Property<long>("AuthorId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("BookName")
@@ -63,14 +60,13 @@ namespace ordinary.Migrations
 
             modelBuilder.Entity("ordinary.Book", b =>
                 {
-                    b.HasOne("ordinary.Author", null)
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId");
-                });
+                    b.HasOne("ordinary.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("ordinary.Author", b =>
-                {
-                    b.Navigation("Books");
+                    b.Navigation("Author");
                 });
 #pragma warning restore 612, 618
         }

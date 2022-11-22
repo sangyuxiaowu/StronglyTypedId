@@ -1,9 +1,7 @@
 ﻿
 
 using ordinary;
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 TestDbContext ctx = new TestDbContext();
 
@@ -18,7 +16,7 @@ ctx.Authors.Add(zack);
 ctx.SaveChanges();
 
 ctx.Books.Add(new Book {
-    Author= zack.Id,
+    Author= zack,
     BookName = "ddd .net",
 });
 
