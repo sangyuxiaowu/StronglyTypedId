@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LessCode.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Options;
 
-namespace StronglyTypedId
+namespace LessCodeEF
 {
     internal class TestDbContext : DbContext
     {
@@ -16,7 +17,7 @@ namespace StronglyTypedId
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connStr = "Server=192.168.1.6;database=test1;uid=root;pwd=1q2wazsx;";
+            string connStr = "Server=192.168.1.6;database=test2;uid=root;pwd=1q2wazsx;";
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 27));
             optionsBuilder.UseMySql(connStr, serverVersion);
             optionsBuilder.LogTo(Console.WriteLine);
@@ -24,31 +25,16 @@ namespace StronglyTypedId
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Author>().Property(author => author.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Book>().Property(book => book.Id).ValueGeneratedOnAdd();
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ConfigureStronglyTypedId();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
-            configurationBuilder.Properties<AuthorId>().HaveConversion<AuthorIdConverter>();
-            configurationBuilder.Properties<BookId>().HaveConversion<BookIdConverter>();
+            base.ConfigureConventions(configurationBuilder);
+            configurationBuilder.ConfigureStronglyTypedIdConventions(this);
         }
 
-        private class AuthorIdConverter : ValueConverter<AuthorId, long>
-        {
-            public AuthorIdConverter()
-                : base(v => v.Value, v => new(v))
-            {
-            }
-        }
-
-        private class BookIdConverter : ValueConverter<BookId, Guid>
-        {
-            public BookIdConverter()
-                : base(v => v.Value, v => new(v))
-            {
-            }
-        }
 
     }
 }
