@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StronglyTypedId", "Strongly
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ordinary", "ordinary\ordinary.csproj", "{D165C0BE-655A-4233-9DFE-A58EF984CA88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{B0BE2C05-FB3E-4C97-964C-8EB5263B1EB3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LessCodeEF", "LessCodeEF\LessCodeEF.csproj", "{32FC865F-9E51-42B8-8CDF-8834D236AAF3}"
 EndProject
 Global
